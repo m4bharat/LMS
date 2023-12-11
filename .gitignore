@@ -1,0 +1,18 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/LotteryAPI/obj/Debug/net7.0/LotteryAPI.assets.cache
+*.wsuo
+*.vsidx
+*.v2
+/LotteryAPI/obj/LotteryAPI.csproj.nuget.dgspec.json
+/LotteryAPI/obj/project.assets.json
+/LotteryAPI/obj/project.nuget.cache
+/LotteryAPI/obj/Debug/net7.0/LotteryAPI.GeneratedMSBuildEditorConfig.editorconfig
+*.suo
+/lottery/obj/Debug/net6.0/lottery.assets.cache
+/lottery/obj/Debug/net6.0/lottery.GeneratedMSBuildEditorConfig.editorconfig
+/lottery/obj/lottery.csproj.nuget.dgspec.json
+/lottery/obj/project.assets.json
+/lottery/obj/project.nuget.cache
