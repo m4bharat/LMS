@@ -5,7 +5,7 @@ namespace LotteryAPI.LotteryBusiness.IService
 {
     public interface ILotteryNumbersService
     {
-        public Task<LotteryNumbers> GenerateLotteryTicket(CreateLotteryRequestDto param);
+        public Task<LotteryNumbers> BuyLotteryTicketAsync(CreateLotteryRequestDto param);
         public Task<List<LotteryNumbers>> GetLotteryTicketListByContestId(int ContestId);
         public Task<LotteryNumbers> GetLotteryTicketById(int Id);
     }

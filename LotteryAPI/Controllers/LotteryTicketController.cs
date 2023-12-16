@@ -20,9 +20,9 @@ namespace LotteryAPI.Controllers
         }
         // POST: api/<LotteryTicketController>
         [HttpPost]
-        public async Task<LotteryNumbers> GetAsync(CreateLotteryRequestDto req)
+        public async Task<LotteryNumbers> BuyLotteryTicket(CreateLotteryRequestDto req)
         {
-            return await _LotteryNumbersService.GenerateLotteryTicket(req);
+            return await _LotteryNumbersService.BuyLotteryTicketAsync(req);
         }
     }
 }

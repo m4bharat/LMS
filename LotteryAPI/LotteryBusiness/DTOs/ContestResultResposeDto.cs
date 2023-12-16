@@ -1,6 +1,6 @@
 ﻿namespace LotteryAPI.LotteryBusiness.DTOs
 {
-    public class DrawLotteryNumbersRespose
+    public class ContestResultResposeDto
     {
         public int LotteryNumbersId { get; set; }
         public int ContestDetailId { get; set; }

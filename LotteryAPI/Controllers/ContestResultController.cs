@@ -18,9 +18,9 @@ namespace LotteryAPI.Controllers
         }
         // GET: api/<ContestResultController>
         [HttpGet]
-        public async Task<List<DrawLotteryNumbersRespose>> GetAsync(int CampaignId)
+        public async Task<List<ContestResultResposeDto>> GetLotteryResult(int CampaignId)
         {
-            return await _ContestResultService.DrawLotteryNumbersAsync(CampaignId);
+            return await _ContestResultService.GetLotteryResultAsync(CampaignId);
         }
 
 

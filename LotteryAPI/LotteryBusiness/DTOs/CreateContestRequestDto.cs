@@ -1,6 +1,6 @@
-﻿namespace LotteryAPI.DbInfra.Model
+﻿namespace LotteryAPI.LotteryBusiness.DTOs
 {
-    public class ContestDetail : TrackableModel
+    public class CreateContestRequestDto
     {
         public int ContestDetailId { get; set; }
         public string ContestDetailBannerImgUrl { get; set; }
@@ -10,7 +10,6 @@
         public int ContestTicketPrice { get; set; }
         public int ContestTotalTicket { get; set; }
         public int ContestTotalBoughtTicket { get; set; }
-        public int ContestValue { get; set; }
         public DateTime ContestStartDate { get; set; }
         public DateTime ContestStartTime { get; set; }
         public DateTime ContestEndDate { get; set; }
@@ -18,8 +17,6 @@
         public DateTime ContestDrawDate { get; set; }
         public DateTime ContestDrawTime { get; set; }
         public int ContestNumberOfWinners { get; set; }
-        public bool IsResultPublished { get; set; }
         public string DrawContestNumbers { get; set; }
-
     }
 }

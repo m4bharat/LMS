@@ -19,10 +19,12 @@ string conStr = builder.Configuration.GetConnectionString("DataContext");
 builder.Services.AddDbContext<ContestDbContext>(options => options.UseSqlServer(conStr));
 
 // Register Repository
+builder.Services.AddScoped<IContestDetailRepo, ContestDetailRepo>();
 builder.Services.AddScoped<ILotteryNumbersRepo, LotteryNumbersRepo>();
 builder.Services.AddScoped<IContestResultRepo, ContestResultRepo>();
 
 // Register Services
+builder.Services.AddScoped<IContestDetailService, ContestDetailService>();
 builder.Services.AddScoped<ILotteryNumbersService, LotteryNumbersService>();
 builder.Services.AddScoped<IContestResultService, ContestResultService>();
 
