@@ -32,3 +32,10 @@
 /LotteryAPI/bin/Debug/net7.0/LotteryAPI.dll
 /LotteryAPI/bin/Debug/net7.0/LotteryAPI.exe
 /LotteryAPI/obj/Debug/net7.0/ref/LotteryAPI.dll
+*.config
+/LotteryAPI/bin/Debug/net7.0/AutoMapper.dll
+/LotteryAPI/bin/Debug/net7.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+/LotteryAPI/bin/Debug/net7.0/BCrypt.Net-Next.dll
+/LotteryAPI/obj/Debug/net7.0/LotteryAPI.csproj.AssemblyReference.cache
+/LotteryAPI/bin/Debug/net7.0/LotteryAPI.deps.json
+/LotteryAPI/bin/Debug/net7.0/appsettings.json
