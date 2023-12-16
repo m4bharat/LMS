@@ -3,11 +3,13 @@ using LotteryAPI.LotteryBusiness.DTOs;
 using LotteryAPI.LotteryBusiness.IService;
 using LotteryAPI.LotteryBusiness.Service;
 using Microsoft.AspNetCore.Mvc;
+using UserIdentity.Service.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace LotteryAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class LotteryTicketController : ControllerBase

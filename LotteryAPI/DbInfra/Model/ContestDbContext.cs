@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using UserIdentity.Service.Entities;
 
 namespace LotteryAPI.DbInfra.Model
 {
@@ -17,6 +18,7 @@ namespace LotteryAPI.DbInfra.Model
         public DbSet<ContestDetail> ContestDetails { get; set; }
         public DbSet<ContestResult> ContestResults { get; set; }
         public DbSet<LotteryNumbers> LotteryNumbers { get; set; }
+        public DbSet<User> Users { get; set; }
 
         #region TrackableEntityPopulation
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
