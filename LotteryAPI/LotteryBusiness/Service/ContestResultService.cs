@@ -3,6 +3,7 @@ using LotteryAPI.LotteryBusiness.DTOs;
 using LotteryAPI.LotteryBusiness.IRepository;
 using LotteryAPI.LotteryBusiness.IService;
 using LotteryAPI.LotteryBusiness.Repository;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LotteryAPI.LotteryBusiness.Service
 {
@@ -20,16 +21,21 @@ namespace LotteryAPI.LotteryBusiness.Service
         }
         public async Task<List<ContestResultResposeDto>> GetLotteryResultAsync(int ContestId)
         {
-            //if (await _contestDetailRepo.ExistsAsync(x => x.ContestDetailId == ContestId && x.IsResultPublished == true))
-            //{
-
-            //}
-            //else
-            //{
-            return await getDrawResult(ContestId);
-            //}
+            var data = _contestDetailRepo.Find(x => x.ContestDetailId == ContestId).FirstOrDefault();
+            if (data == null) throw new InvalidDataException("Invalid Contest");
+            if (data.IsResultPublished == true)
+            {
+                return getPublishedResult(ContestId, data.DrawContestNumbers);
+            }
+            else
+            {
+                return await getDrawResult(ContestId);
+            }
         }
-
+        private List<ContestResultResposeDto> getPublishedResult(int ContestId, string winningNumbers)
+        {
+            return _ContestResultRepo.getPublishedResult(ContestId, winningNumbers);
+        }
         private async Task<List<ContestResultResposeDto>> getDrawResult(int ContestId)
         {
             List<LotteryNumbers> tickets = await _lotteryNumbersService.GetLotteryTicketListByContestId(ContestId);
@@ -46,23 +52,34 @@ namespace LotteryAPI.LotteryBusiness.Service
                 drawLotteryNumbersRespose.JoinLotteryNumber = string.Join(", ", numbers);
                 drawLotteryNumbersResposeList.Add(drawLotteryNumbersRespose);
             }
-
+            var resultList = new List<ContestResult>();
             foreach (var ticket in drawLotteryNumbersResposeList)
             {
                 int matchingNumbers = CountMatchingNumbers(ticket.TicketInArray, winningNumbers);
                 ticket.MatchCount = matchingNumbers;
-                if (matchingNumbers > 0)
+                if (DetermineWinningRank(matchingNumbers) <= 3)
                 {
                     var data = new ContestResult()
                     {
                         ContestDetailId = ticket.ContestDetailId,
-                        ContestWinnerRank = ticket.WinnerRank,
                         LotteryNumberMatchCount = ticket.MatchCount,
+                        ContestWinnerRank = DetermineWinningRank(ticket.MatchCount),
                         LotteryNumberId = ticket.LotteryNumbersId,
                     };
-                    await _ContestResultRepo.AddAsync(data);
+                    resultList.Add(data);
                 }
             }
+
+            // check resultList have all three ranked winner
+            if (foundAllCorrectWinner(resultList))
+            {
+                await _ContestResultRepo.AddRangeAsync(resultList);
+            }
+            else
+            {
+                await getDrawResult(ContestId);
+            }
+
             var contestDetailData = (await _contestDetailRepo.FindAsync(x => x.ContestDetailId == ContestId)).FirstOrDefault();
             contestDetailData.IsResultPublished = true;
             contestDetailData.DrawContestNumbers = string.Join(", ", winningNumbers);
@@ -75,6 +92,36 @@ namespace LotteryAPI.LotteryBusiness.Service
         private int CountMatchingNumbers(int[] userNumbers, int[] winningNumbers)
         {
             return userNumbers.Count(winningNumbers.Contains);
+        }
+
+        static int DetermineWinningRank(int matchingNumbers)
+        {
+            if (matchingNumbers == 5)
+            {
+                return 1;
+            }
+            else if (matchingNumbers >= 4)
+            {
+                return 2;
+            }
+            else if (matchingNumbers >= 3)
+            {
+                return 3;
+            }
+            return matchingNumbers + 100;
+        }
+
+        public static bool foundAllCorrectWinner(List<ContestResult> lis)
+        {
+            if (
+                   lis.Any(x => x.ContestWinnerRank == 1)
+                && lis.Any(x => x.ContestWinnerRank == 2)
+                && lis.Any(x => x.ContestWinnerRank == 3)
+                && lis.Where(x => x.ContestWinnerRank == 1).Count() == 1
+                && lis.Where(x => x.ContestWinnerRank == 2).Count() == 1
+                )
+                return true;
+            return false;
         }
     }
 }
