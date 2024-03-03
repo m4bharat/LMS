@@ -25,16 +25,16 @@ namespace LotteryAPI.LotteryBusiness.Service
             if (data == null) throw new InvalidDataException("Invalid Contest");
             if (data.IsResultPublished == true)
             {
-                return getPublishedResult(ContestId, data.DrawContestNumbers);
+                return getPublishedResultByContestId(ContestId, data.DrawContestNumbers);
             }
             else
             {
                 return await getDrawResult(ContestId);
             }
         }
-        private List<ContestResultResposeDto> getPublishedResult(int ContestId, string winningNumbers)
+        private List<ContestResultResposeDto> getPublishedResultByContestId(int ContestId, string winningNumbers)
         {
-            return _ContestResultRepo.getPublishedResult(ContestId, winningNumbers);
+            return _ContestResultRepo.getPublishedResultByContestId(ContestId, winningNumbers);
         }
         private async Task<List<ContestResultResposeDto>> getDrawResult(int ContestId)
         {

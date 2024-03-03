@@ -12,7 +12,7 @@ namespace LotteryAPI.LotteryBusiness.Repository
 
 
 
-        public List<ContestResultResposeDto> getPublishedResult(int ContestId, string winningNumbers)
+        public List<ContestResultResposeDto> getPublishedResultByContestId(int ContestId, string winningNumbers)
         {
 
             return _context.ContestResults.Join(_context.LotteryNumbers, c => c.LotteryNumberId, l => l.LotteryNumbersId, (c, l) => new { c, l })
