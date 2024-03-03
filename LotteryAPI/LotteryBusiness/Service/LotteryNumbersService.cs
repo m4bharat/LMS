@@ -17,40 +17,56 @@ namespace LotteryAPI.LotteryBusiness.Service
             _contestDetailRepo = contestDetailRepo as ContestDetailRepo;
         }
 
-        public async Task<LotteryNumbers> BuyLotteryTicketAsync(CreateLotteryRequestDto param)
+        public async Task<BuyLotteryResponseDto> BuyLotteryTicketAsync(CreateLotteryRequestDto param)
         {
-            LotteryNumbers lotteryNumbers = new LotteryNumbers();
+            BuyLotteryResponseDto resp = new BuyLotteryResponseDto();
             try
             {
-                //TO DO
+                //TO DO----------
                 //CHeck expiry for contest
-                var contestdata = _contestDetailRepo.Find(x => x.ContestDetailId == param.ContestDetailId).FirstOrDefault();
-                if (contestdata != null)
+                foreach (var l in param.PurchasedTickets)
                 {
-                    int[] tickets = _lotteryNumbersRepo.GenerateLotteryNumbers();
-                    lotteryNumbers.LotteryNumber1 = tickets[0];
-                    lotteryNumbers.LotteryNumber2 = tickets[1];
-                    lotteryNumbers.LotteryNumber3 = tickets[2];
-                    lotteryNumbers.LotteryNumber4 = tickets[3];
-                    lotteryNumbers.LotteryNumber5 = tickets[4];
-                    lotteryNumbers.BonusNumber = tickets[5];
-                    lotteryNumbers.ContestDetailId = param.ContestDetailId;
-                    lotteryNumbers.PaymentTransactionId = param.PaymentTransactionId;
-                    lotteryNumbers.UserId = param.UserId;
+                    var contestdata = _contestDetailRepo.Find(x => x.ContestDetailId == l.ContestDetailId).FirstOrDefault();
+                    if (contestdata != null)
+                    {
+                        int[] tickets = _lotteryNumbersRepo.GenerateLotteryNumbers();
+                        var lotteryNumbers = new LotteryNumbers();
+                        lotteryNumbers.LotteryNumber1 = tickets[0];
+                        lotteryNumbers.LotteryNumber2 = tickets[1];
+                        lotteryNumbers.LotteryNumber3 = tickets[2];
+                        lotteryNumbers.LotteryNumber4 = tickets[3];
+                        lotteryNumbers.LotteryNumber5 = tickets[4];
+                        lotteryNumbers.BonusNumber = tickets[5];
+                        lotteryNumbers.ContestDetailId = l.ContestDetailId;
+                        lotteryNumbers.PaymentTransactionId = param.PaymentTransactionId;
+                        lotteryNumbers.UserId = param.UserId;
 
-                    await _lotteryNumbersRepo.AddAsync(lotteryNumbers);
-                    contestdata.ContestTotalBoughtTicket = contestdata.ContestTotalBoughtTicket + 1;
-                    _contestDetailRepo.Update(contestdata);
+                        await _lotteryNumbersRepo.AddAsync(lotteryNumbers);
+                        contestdata.ContestTotalBoughtTicket = contestdata.ContestTotalBoughtTicket + 1;
+                        _contestDetailRepo.Update(contestdata);
 
-                    await _lotteryNumbersRepo.SaveChangesAsync();
-                    await _contestDetailRepo.SaveChangesAsync();
-                    return lotteryNumbers;
+                        PurchasedTicketsDetail d = new PurchasedTicketsDetail();
+                        d.LotteryNumber1 = lotteryNumbers.LotteryNumber1;
+                        d.LotteryNumber2 = lotteryNumbers.LotteryNumber2;
+                        d.LotteryNumber3 = lotteryNumbers.LotteryNumber3;
+                        d.LotteryNumber4 = lotteryNumbers.LotteryNumber4;
+                        d.LotteryNumber5 = lotteryNumbers.LotteryNumber5;
+                        d.BonusNumber = lotteryNumbers.BonusNumber;
+                        d.ContestDetailId = lotteryNumbers.ContestDetailId;
+                        resp.PurchasedTicketsDetail.Add(d);
+                    }
+                    else
+                    {
+                        throw new InvalidDataException("Contest doesn't exist or not live/expired.");
+                    }
                 }
-                else
-                {
-                    throw new InvalidDataException("Contest doesn't exist or not live/expired.");
-                }
 
+                // Saving and Updating tables
+                await _lotteryNumbersRepo.SaveChangesAsync();
+                await _contestDetailRepo.SaveChangesAsync();
+                resp.UserId = param.UserId;
+                resp.PaymentTransactionId = param.PaymentTransactionId;
+                return resp;
             }
 
             catch (Exception ex)

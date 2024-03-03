@@ -1,0 +1,15 @@
+E:\Projects\Lotto\API\lottery\bin\Debug\net6.0\lottery.exe
+E:\Projects\Lotto\API\lottery\bin\Debug\net6.0\lottery.deps.json
+E:\Projects\Lotto\API\lottery\bin\Debug\net6.0\lottery.runtimeconfig.json
+E:\Projects\Lotto\API\lottery\bin\Debug\net6.0\lottery.dll
+E:\Projects\Lotto\API\lottery\bin\Debug\net6.0\lottery.pdb
+E:\Projects\Lotto\API\lottery\obj\Debug\net6.0\lottery.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\Lotto\API\lottery\obj\Debug\net6.0\lottery.AssemblyInfoInputs.cache
+E:\Projects\Lotto\API\lottery\obj\Debug\net6.0\lottery.AssemblyInfo.cs
+E:\Projects\Lotto\API\lottery\obj\Debug\net6.0\lottery.csproj.CoreCompileInputs.cache
+E:\Projects\Lotto\API\lottery\obj\Debug\net6.0\lottery.sourcelink.json
+E:\Projects\Lotto\API\lottery\obj\Debug\net6.0\lottery.dll
+E:\Projects\Lotto\API\lottery\obj\Debug\net6.0\refint\lottery.dll
+E:\Projects\Lotto\API\lottery\obj\Debug\net6.0\lottery.pdb
+E:\Projects\Lotto\API\lottery\obj\Debug\net6.0\lottery.genruntimeconfig.cache
+E:\Projects\Lotto\API\lottery\obj\Debug\net6.0\ref\lottery.dll

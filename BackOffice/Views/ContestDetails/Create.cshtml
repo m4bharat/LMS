@@ -1,0 +1,143 @@
+﻿@model LotteryAPI.DbInfra.Model.ContestDetail
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ContestDetail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ContestDetailBannerImgUrl" class="control-label"></label>
+                <input asp-for="ContestDetailBannerImgUrl" class="form-control" />
+                <span asp-validation-for="ContestDetailBannerImgUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContestDetailTileImgUrl" class="control-label"></label>
+                <input asp-for="ContestDetailTileImgUrl" class="form-control" />
+                <span asp-validation-for="ContestDetailTileImgUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContestDetailTitle" class="control-label"></label>
+                <input asp-for="ContestDetailTitle" class="form-control" />
+                <span asp-validation-for="ContestDetailTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContestDetailDescription" class="control-label"></label>
+                <input asp-for="ContestDetailDescription" class="form-control" />
+                <span asp-validation-for="ContestDetailDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContestTicketPrice" class="control-label"></label>
+                <input asp-for="ContestTicketPrice" class="form-control" />
+                <span asp-validation-for="ContestTicketPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContestTotalTicket" class="control-label"></label>
+                <input asp-for="ContestTotalTicket" class="form-control" />
+                <span asp-validation-for="ContestTotalTicket" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContestTotalBoughtTicket" class="control-label"></label>
+                <input asp-for="ContestTotalBoughtTicket" class="form-control" />
+                <span asp-validation-for="ContestTotalBoughtTicket" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContestValue" class="control-label"></label>
+                <input asp-for="ContestValue" class="form-control" />
+                <span asp-validation-for="ContestValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContestStartDate" class="control-label"></label>
+                <input asp-for="ContestStartDate" class="form-control" />
+                <span asp-validation-for="ContestStartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContestStartTime" class="control-label"></label>
+                <input asp-for="ContestStartTime" class="form-control" />
+                <span asp-validation-for="ContestStartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContestEndDate" class="control-label"></label>
+                <input asp-for="ContestEndDate" class="form-control" />
+                <span asp-validation-for="ContestEndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContestEndTime" class="control-label"></label>
+                <input asp-for="ContestEndTime" class="form-control" />
+                <span asp-validation-for="ContestEndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContestDrawDate" class="control-label"></label>
+                <input asp-for="ContestDrawDate" class="form-control" />
+                <span asp-validation-for="ContestDrawDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContestDrawTime" class="control-label"></label>
+                <input asp-for="ContestDrawTime" class="form-control" />
+                <span asp-validation-for="ContestDrawTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContestNumberOfWinners" class="control-label"></label>
+                <input asp-for="ContestNumberOfWinners" class="form-control" />
+                <span asp-validation-for="ContestNumberOfWinners" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsResultPublished" /> @Html.DisplayNameFor(model => model.IsResultPublished)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="DrawContestNumbers" class="control-label"></label>
+                <input asp-for="DrawContestNumbers" class="form-control" />
+                <span asp-validation-for="DrawContestNumbers" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedOn" class="control-label"></label>
+                <input asp-for="CreatedOn" class="form-control" />
+                <span asp-validation-for="CreatedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedBy" class="control-label"></label>
+                <input asp-for="CreatedBy" class="form-control" />
+                <span asp-validation-for="CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdatedOn" class="control-label"></label>
+                <input asp-for="UpdatedOn" class="form-control" />
+                <span asp-validation-for="UpdatedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdatedBy" class="control-label"></label>
+                <input asp-for="UpdatedBy" class="form-control" />
+                <span asp-validation-for="UpdatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

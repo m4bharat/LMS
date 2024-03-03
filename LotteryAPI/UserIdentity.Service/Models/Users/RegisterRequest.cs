@@ -9,6 +9,8 @@ namespace UserIdentity.Service.Models.Users
 
         [Required]
         public string LastName { get; set; }
+        [Required]
+        public string PhoneNumber { get; set; }
 
         [Required]
         public string Username { get; set; }

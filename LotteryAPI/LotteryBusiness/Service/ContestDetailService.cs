@@ -3,6 +3,7 @@ using LotteryAPI.LotteryBusiness.DTOs;
 using LotteryAPI.LotteryBusiness.IRepository;
 using LotteryAPI.LotteryBusiness.IService;
 using LotteryAPI.LotteryBusiness.Repository;
+using System.Collections.Generic;
 
 namespace LotteryAPI.LotteryBusiness.Service
 {
@@ -53,5 +54,41 @@ namespace LotteryAPI.LotteryBusiness.Service
 
         }
 
+        public async Task<List<ContestDetailResponseDto>> GetLiveContestListAsync()
+        {
+            var data = await _contestDetailRepo.FindAsync(x => x.IsActive);
+            return EntityToDto(data.ToList());
+        }
+
+        private List<ContestDetailResponseDto> EntityToDto(List<ContestDetail> data)
+        {
+            List<ContestDetailResponseDto> lst = new List<ContestDetailResponseDto>();
+            foreach (var d in data)
+            {
+                lst.Add(new ContestDetailResponseDto()
+                {
+                    ContestDetailId = d.ContestDetailId,
+                    ContestDetailBannerImgUrl = d.ContestDetailBannerImgUrl,
+                    ContestDetailTileImgUrl = d.ContestDetailTileImgUrl,
+                    ContestDetailTitle = d.ContestDetailTitle,
+                    ContestDetailDescription = d.ContestDetailDescription,
+                    ContestTicketPrice = d.ContestTicketPrice,
+                    ContestTotalTicket = d.ContestTotalTicket,
+                    ContestTotalBoughtTicket = d.ContestTotalBoughtTicket,
+                    ContestValue = d.ContestValue,
+                    ContestStartDate = d.ContestStartDate,
+                    ContestStartTime = d.ContestStartTime,
+                    ContestEndDate = d.ContestEndDate,
+                    ContestEndTime = d.ContestEndTime,
+                    ContestDrawDate = d.ContestDrawDate,
+                    ContestDrawTime = d.ContestDrawTime,
+                    ContestNumberOfWinners = d.ContestNumberOfWinners,
+                    //IsResultPublished = d.IsResultPublished,
+                    DrawContestNumbers = d.DrawContestNumbers,
+                });
+
+            }
+            return lst;
+        }
     }
 }

@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lottery", "lottery\lottery.csproj", "{263C8103-202B-47AE-9D5C-308A159C7C97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lottery", "lottery\lottery.csproj", "{263C8103-202B-47AE-9D5C-308A159C7C97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LotteryAPI", "LotteryAPI\LotteryAPI.csproj", "{7083B477-BB36-4D52-99CD-7C46A299DEB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LotteryAPI", "LotteryAPI\LotteryAPI.csproj", "{7083B477-BB36-4D52-99CD-7C46A299DEB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackOffice", "BackOffice\BackOffice.csproj", "{F18A15AF-39C2-4FCF-81EC-1F6C03829830}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{7083B477-BB36-4D52-99CD-7C46A299DEB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7083B477-BB36-4D52-99CD-7C46A299DEB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7083B477-BB36-4D52-99CD-7C46A299DEB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F18A15AF-39C2-4FCF-81EC-1F6C03829830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F18A15AF-39C2-4FCF-81EC-1F6C03829830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F18A15AF-39C2-4FCF-81EC-1F6C03829830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F18A15AF-39C2-4FCF-81EC-1F6C03829830}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

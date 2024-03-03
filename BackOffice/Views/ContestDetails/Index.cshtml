@@ -1,0 +1,167 @@
+﻿@model IEnumerable<LotteryAPI.DbInfra.Model.ContestDetail>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestDetailBannerImgUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestDetailTileImgUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestDetailTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestDetailDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestTicketPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestTotalTicket)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestTotalBoughtTicket)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestStartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestEndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestEndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestDrawDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestDrawTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContestNumberOfWinners)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsResultPublished)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DrawContestNumbers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestDetailBannerImgUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestDetailTileImgUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestDetailTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestDetailDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestTicketPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestTotalTicket)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestTotalBoughtTicket)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestEndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestEndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestDrawDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestDrawTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContestNumberOfWinners)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsResultPublished)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DrawContestNumbers)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDeleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ContestDetailId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ContestDetailId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ContestDetailId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

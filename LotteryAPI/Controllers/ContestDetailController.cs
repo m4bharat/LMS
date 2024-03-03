@@ -3,9 +3,11 @@ using LotteryAPI.LotteryBusiness.DTOs;
 using LotteryAPI.LotteryBusiness.IService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UserIdentity.Service.Authorization;
 
 namespace LotteryAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ContestDetailController : ControllerBase
@@ -21,6 +23,13 @@ namespace LotteryAPI.Controllers
         public async Task<bool> CreateAsync(CreateContestRequestDto req)
         {
             return await _ContestDetailService.CreateContestAsync(req);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<List<ContestDetailResponseDto>> GetContestList()
+        {
+            return await _ContestDetailService.GetLiveContestListAsync();
         }
     }
 }
