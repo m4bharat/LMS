@@ -19,12 +19,19 @@ namespace LotteryAPI.Controllers
             _ContestResultService = ContestResultService;
         }
         // GET: api/<ContestResultController>
+        [AllowAnonymous]
         [HttpGet]
         public async Task<List<ContestResultResposeDto>> GetLotteryResult(int CampaignId)
         {
             return await _ContestResultService.GetLotteryResultAsync(CampaignId);
         }
-
+        // GET: api/<ContestResultController>
+        [AllowAnonymous]
+        [HttpGet("GetAllPublishedResult")]
+        public async Task<List<ContestResultResposeDto>> GetAllPublishedResult(int recordCount)
+        {
+            return await _ContestResultService.GetAllPublishedResultAsync(recordCount);
+        }
 
     }
 }

@@ -132,22 +132,28 @@ namespace LotteryAPI.LotteryBusiness.Repository
 
             return ds;
         }
-
+        Random random = new Random();
         public int[] GenerateLotteryNumbers()
         {
-            Random random = new Random();
-            int[] numbers = new int[6]; // You can adjust the number of lottery numbers as needed
-            HashSet<int> uniqueNumbers = new HashSet<int>();
-
-            while (uniqueNumbers.Count < numbers.Length)
+            try
             {
-                int randomNumber = random.Next(1, 50); // You can adjust the range of lottery numbers as needed
-                uniqueNumbers.Add(randomNumber);
+                int[] numbers = new int[6]; // You can adjust the number of lottery numbers as needed
+                HashSet<int> uniqueNumbers = new HashSet<int>();
+
+                while (uniqueNumbers.Count < numbers.Length)
+                {
+                    int randomNumber = random.Next(1, 50); // You can adjust the range of lottery numbers as needed
+                    uniqueNumbers.Add(randomNumber);
+                }
+
+                uniqueNumbers.CopyTo(numbers);
+
+                return numbers;
             }
-
-            uniqueNumbers.CopyTo(numbers);
-
-            return numbers;
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

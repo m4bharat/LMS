@@ -7,6 +7,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="DbInfra\Programmability\StoredProcedure\SP_GetPublishedResults.sql" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="DbInfra\Programmability\StoredProcedure\SP_GetPublishedResults.sql" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="12.0.0" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
 		<PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
@@ -23,6 +31,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="DbInfra\Programmability\Functions\" />
+		<Folder Include="DbInfra\Programmability\UserDefinedTypes\" />
 		<Folder Include="LotteryBusiness\Mapper\" />
 	</ItemGroup>
 

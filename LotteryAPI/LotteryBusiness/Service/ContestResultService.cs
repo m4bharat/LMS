@@ -29,64 +29,76 @@ namespace LotteryAPI.LotteryBusiness.Service
             }
             else
             {
-                return await getDrawResult(ContestId);
+                List<LotteryNumbers> tickets = await _lotteryNumbersService.GetLotteryTicketListByContestId(ContestId);
+                return await getDrawResult(ContestId, tickets);
             }
         }
+
+        public async Task<List<ContestResultResposeDto>> GetAllPublishedResultAsync(int recordCount)
+        {
+            return _ContestResultRepo.getAllPublishedResult(recordCount);
+        }
+
         private List<ContestResultResposeDto> getPublishedResultByContestId(int ContestId, string winningNumbers)
         {
             return _ContestResultRepo.getPublishedResultByContestId(ContestId, winningNumbers);
         }
-        private async Task<List<ContestResultResposeDto>> getDrawResult(int ContestId)
+        private async Task<List<ContestResultResposeDto>> getDrawResult(int ContestId, List<LotteryNumbers> tickets)
         {
-            List<LotteryNumbers> tickets = await _lotteryNumbersService.GetLotteryTicketListByContestId(ContestId);
-            int[] winningNumbers = _ContestResultRepo.GenerateLotteryNumbers();
-            List<ContestResultResposeDto> drawLotteryNumbersResposeList = new List<ContestResultResposeDto>();
-            foreach (var t in tickets)
+            try
             {
-                ContestResultResposeDto drawLotteryNumbersRespose = new ContestResultResposeDto();
-                drawLotteryNumbersRespose.ContestDetailId = ContestId;
-                drawLotteryNumbersRespose.LotteryNumbersId = t.LotteryNumbersId;
-                drawLotteryNumbersRespose.WinnerNumber = string.Join(", ", winningNumbers);
-                int[] numbers = { t.LotteryNumber1, t.LotteryNumber2, t.LotteryNumber3, t.LotteryNumber4, t.LotteryNumber5, t.BonusNumber };
-                drawLotteryNumbersRespose.TicketInArray = numbers;
-                drawLotteryNumbersRespose.JoinLotteryNumber = string.Join(", ", numbers);
-                drawLotteryNumbersResposeList.Add(drawLotteryNumbersRespose);
-            }
-            var resultList = new List<ContestResult>();
-            foreach (var ticket in drawLotteryNumbersResposeList)
-            {
-                int matchingNumbers = CountMatchingNumbers(ticket.TicketInArray, winningNumbers);
-                ticket.MatchCount = matchingNumbers;
-                if (DetermineWinningRank(matchingNumbers) <= 3)
+                int[] winningNumbers = _ContestResultRepo.GenerateLotteryNumbers();
+                List<ContestResultResposeDto> drawLotteryNumbersResposeList = new List<ContestResultResposeDto>();
+                foreach (var t in tickets)
                 {
-                    var data = new ContestResult()
-                    {
-                        ContestDetailId = ticket.ContestDetailId,
-                        LotteryNumberMatchCount = ticket.MatchCount,
-                        ContestWinnerRank = DetermineWinningRank(ticket.MatchCount),
-                        LotteryNumberId = ticket.LotteryNumbersId,
-                    };
-                    resultList.Add(data);
+                    ContestResultResposeDto drawLotteryNumbersRespose = new ContestResultResposeDto();
+                    drawLotteryNumbersRespose.ContestDetailId = ContestId;
+                    drawLotteryNumbersRespose.LotteryNumbersId = t.LotteryNumbersId;
+                    drawLotteryNumbersRespose.WinnerNumber = string.Join(", ", winningNumbers);
+                    int[] numbers = { t.LotteryNumber1, t.LotteryNumber2, t.LotteryNumber3, t.LotteryNumber4, t.LotteryNumber5, t.BonusNumber };
+                    drawLotteryNumbersRespose.TicketInArray = numbers;
+                    drawLotteryNumbersRespose.JoinLotteryNumber = string.Join(", ", numbers);
+                    drawLotteryNumbersResposeList.Add(drawLotteryNumbersRespose);
                 }
-            }
+                var resultList = new List<ContestResult>();
+                foreach (var ticket in drawLotteryNumbersResposeList)
+                {
+                    int matchingNumbers = CountMatchingNumbers(ticket.TicketInArray, winningNumbers);
+                    ticket.MatchCount = matchingNumbers;
+                    if (DetermineWinningRank(matchingNumbers) <= 3)
+                    {
+                        var data = new ContestResult()
+                        {
+                            ContestDetailId = ticket.ContestDetailId,
+                            LotteryNumberMatchCount = ticket.MatchCount,
+                            ContestWinnerRank = DetermineWinningRank(ticket.MatchCount),
+                            LotteryNumberId = ticket.LotteryNumbersId,
+                        };
+                        resultList.Add(data);
+                    }
+                }
 
-            // check resultList have all three ranked winner
-            if (foundAllCorrectWinner(resultList))
-            {
-                await _ContestResultRepo.AddRangeAsync(resultList);
-            }
-            else
-            {
-                await getDrawResult(ContestId);
-            }
+                // check resultList have all three ranked winner
+                if (foundAllCorrectWinner(resultList))
+                {
+                    await _ContestResultRepo.AddRangeAsync(resultList);
+                }
+                else
+                {
+                    await getDrawResult(ContestId, tickets);
+                }
 
-            var contestDetailData = (await _contestDetailRepo.FindAsync(x => x.ContestDetailId == ContestId)).FirstOrDefault();
-            contestDetailData.IsResultPublished = true;
-            contestDetailData.DrawContestNumbers = string.Join(", ", winningNumbers);
-            _contestDetailRepo.Update(contestDetailData);
-            _ContestResultRepo.SaveChanges();
-            _contestDetailRepo.SaveChanges();
-            return drawLotteryNumbersResposeList;
+                var contestDetailData = (await _contestDetailRepo.FindAsync(x => x.ContestDetailId == ContestId)).FirstOrDefault();
+                contestDetailData.IsResultPublished = true;
+                contestDetailData.DrawContestNumbers = string.Join(", ", winningNumbers);
+                _contestDetailRepo.Update(contestDetailData);
+                _ContestResultRepo.SaveChanges();
+                _contestDetailRepo.SaveChanges();
+                return drawLotteryNumbersResposeList;
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private int CountMatchingNumbers(int[] userNumbers, int[] winningNumbers)
@@ -96,15 +108,15 @@ namespace LotteryAPI.LotteryBusiness.Service
 
         static int DetermineWinningRank(int matchingNumbers)
         {
-            if (matchingNumbers == 5)
+            if (matchingNumbers >= 5)
             {
                 return 1;
             }
-            else if (matchingNumbers >= 4)
+            else if (matchingNumbers == 4)
             {
                 return 2;
             }
-            else if (matchingNumbers >= 3)
+            else if (matchingNumbers == 3)
             {
                 return 3;
             }
@@ -119,6 +131,7 @@ namespace LotteryAPI.LotteryBusiness.Service
                 && lis.Any(x => x.ContestWinnerRank == 3)
                 && lis.Where(x => x.ContestWinnerRank == 1).Count() == 1
                 && lis.Where(x => x.ContestWinnerRank == 2).Count() == 1
+                && lis.Where(x => x.ContestWinnerRank == 3).Count() <= 10
                 )
                 return true;
             return false;

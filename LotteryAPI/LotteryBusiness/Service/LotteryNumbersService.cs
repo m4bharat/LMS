@@ -64,7 +64,7 @@ namespace LotteryAPI.LotteryBusiness.Service
                 // Saving and Updating tables
                 await _lotteryNumbersRepo.SaveChangesAsync();
                 await _contestDetailRepo.SaveChangesAsync();
-                resp.UserId = param.UserId;
+                //resp.UserId = param.UserId;
                 resp.PaymentTransactionId = param.PaymentTransactionId;
                 return resp;
             }

@@ -4,6 +4,7 @@ namespace LotteryAPI.LotteryBusiness.IService
 {
     public interface IContestResultService
     {
-        public Task<List<ContestResultResposeDto>> GetLotteryResultAsync(int ContestId);
+        Task<List<ContestResultResposeDto>> GetLotteryResultAsync(int ContestId);
+        Task<List<ContestResultResposeDto>> GetAllPublishedResultAsync(int recordCount);
     }
 }

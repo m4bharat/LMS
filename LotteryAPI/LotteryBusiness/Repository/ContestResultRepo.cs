@@ -10,7 +10,20 @@ namespace LotteryAPI.LotteryBusiness.Repository
         {
         }
 
-
+        public List<ContestResultResposeDto> getAllPublishedResult(int recordCount)
+        {
+            return _context.ContestResults
+                .Join(_context.ContestDetails, cd => cd.ContestDetailId, cdl => cdl.ContestDetailId, (cd, cdl) => new { cd, cdl })
+                .Where(m => m.cdl.IsResultPublished == true && m.cdl.IsActive == true)
+                .Select(k => new ContestResultResposeDto()
+                {
+                    ContestDetailId = k.cd.ContestDetailId,
+                    WinnerRank = k.cd.ContestWinnerRank,
+                    MatchCount = k.cd.LotteryNumberMatchCount,
+                    WinnerNumber = k.cdl.DrawContestNumbers,
+                   
+                }).ToList();
+        }
 
         public List<ContestResultResposeDto> getPublishedResultByContestId(int ContestId, string winningNumbers)
         {
