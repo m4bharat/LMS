@@ -67,15 +67,15 @@ namespace UserIdentity.Service.Services
             for (int i = 0; i < 4500; i++)
             {
                 var ph = 1234567890 + i;
-                model.Username = "testuser" + i + "@lottery.com";
+                model.EmailId = "testuser" + i + "@lottery.com";
                 model.Password = "testuser" + i;
                 model.FirstName = "Test";
                 model.LastName = "User" + i;
                 model.PhoneNumber = ph.ToString();
 
                 // validate
-                if (_context.Users.Any(x => x.EmailId == model.Username))
-                    throw new AppException("Username '" + model.Username + "' is already taken");
+                if (_context.Users.Any(x => x.EmailId == model.EmailId))
+                    throw new AppException("EmailId '" + model.EmailId + "' is already registered");
                 if (_context.Users.Any(x => x.PhoneNumber == model.PhoneNumber))
                     throw new AppException("Phone Number '" + model.PhoneNumber + "' is already registered");
 

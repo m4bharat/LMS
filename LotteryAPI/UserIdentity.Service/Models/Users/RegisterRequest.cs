@@ -13,7 +13,7 @@ namespace UserIdentity.Service.Models.Users
         public string PhoneNumber { get; set; }
 
         [Required]
-        public string Username { get; set; }
+        public string EmailId { get; set; }
 
         [Required]
         public string Password { get; set; }
