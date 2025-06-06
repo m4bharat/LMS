@@ -17,5 +17,10 @@ namespace UserIdentity.Service.Models.Users
 
         [Required]
         public string Password { get; set; }
+        
+        public string CPassword { get; set; }
+
+        public bool TermOfUse { get; set; }
+        
     }
 }

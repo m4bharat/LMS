@@ -1,12 +1,14 @@
 using AutoMapper;
-using BCryptNet = BCrypt.Net.BCrypt;
+using LotteryAPI.DbInfra.Model;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UserIdentity.Service.Authorization;
 using UserIdentity.Service.Entities;
 using UserIdentity.Service.Helpers;
 using UserIdentity.Service.Models.Users;
-using LotteryAPI.DbInfra.Model;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace UserIdentity.Service.Services
 {
@@ -38,7 +40,7 @@ namespace UserIdentity.Service.Services
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            var user = _context.Users.SingleOrDefault(x => x.Username == model.Username);
+            var user = _context.Users.SingleOrDefault(x => x.EmailId == model.Username);
 
             // validate
             if (user == null || !BCryptNet.Verify(model.Password, user.PasswordHash))
@@ -62,21 +64,32 @@ namespace UserIdentity.Service.Services
 
         public void Register(RegisterRequest model)
         {
-            // validate
-            if (_context.Users.Any(x => x.Username == model.Username))
-                throw new AppException("Username '" + model.Username + "' is already taken");
-            if (_context.Users.Any(x => x.PhoneNumber == model.PhoneNumber))
-                throw new AppException("Phone Number '" + model.PhoneNumber + "' is already registered");
+            for (int i = 0; i < 4500; i++)
+            {
+                var ph = 1234567890 + i;
+                model.Username = "testuser" + i + "@lottery.com";
+                model.Password = "testuser" + i;
+                model.FirstName = "Test";
+                model.LastName = "User" + i;
+                model.PhoneNumber = ph.ToString();
 
-            // map model to new user object
-            var user = _mapper.Map<User>(model);
+                // validate
+                if (_context.Users.Any(x => x.EmailId == model.Username))
+                    throw new AppException("Username '" + model.Username + "' is already taken");
+                if (_context.Users.Any(x => x.PhoneNumber == model.PhoneNumber))
+                    throw new AppException("Phone Number '" + model.PhoneNumber + "' is already registered");
 
-            // hash password
-            user.PasswordHash = BCryptNet.HashPassword(model.Password);
+                // map model to new user object
+                var user = _mapper.Map<User>(model);
 
-            // save user
-            _context.Users.Add(user);
-            _context.SaveChanges();
+                // hash password
+                user.PasswordHash = BCryptNet.HashPassword(model.Password);
+
+                // save user
+                _context.Users.Add(user);
+                _context.SaveChanges();
+
+            }
         }
 
         public void Update(int id, UpdateRequest model)
@@ -84,7 +97,7 @@ namespace UserIdentity.Service.Services
             var user = getUser(id);
 
             // validate
-            if (model.Username != user.Username && _context.Users.Any(x => x.Username == model.Username))
+            if (model.Username != user.EmailId && _context.Users.Any(x => x.EmailId == model.Username))
                 throw new AppException("Username '" + model.Username + "' is already taken");
 
             // hash password if it was entered
